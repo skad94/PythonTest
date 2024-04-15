@@ -1,0 +1,1 @@
+print("string normal " + str(9+5))
