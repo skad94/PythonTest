@@ -11,13 +11,15 @@ class Proba:
 
 
 class ProbaDiscrete(Proba):
-    def __init__(self, values, probabilities):
-        self.state = values
+    def __init__(self, state, probabilities):
+        self.state = state
         self.probabilities = probabilities
 
     def show_info(self):
-        print("Values :", self.state)
-        print("Probabilities :", self.probabilities)
+        res = []
+        for i in range(self.state.len()):
+            res.append([self.state(i),self.probabilities(i)])
+            print(res[-1])
 
     def __copy__(self):
         return type(self)(self.state.copy(), self.probabilities.copy())
@@ -43,11 +45,6 @@ class Bernouilli(ProbaDiscrete):
         self.param = param
         self.state = [0,1]
         self.probabilities = [param;1-param]
-
-    def show_info(self):
-        print("Parameter :", self.param)
-        print("Values :", self.values)
-        print("Probabilities :", self.probabilities)
 
     def __copy__(self):
         return type(self)(self.values.copy(), self.probabilities.copy())
