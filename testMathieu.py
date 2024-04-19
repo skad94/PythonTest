@@ -1,4 +1,20 @@
 import copy as copy
+def checkProba(array):
+    res = 0
+    for p_i in array:
+        if p_i < 0:
+            return False
+        if p_i > 1:
+            return False
+        else:
+            res = res + p_i
+    if res == 1:
+        return True
+    else:
+        return False
+        
+    
+
 class Proba:
     def __init__(self, name):
         self.name = name
@@ -14,7 +30,17 @@ class ProbaDiscrete(Proba):
     def __init__(self, name, state, probabilities):
         super().__init__(name)
         self.state = state
-        self.probabilities = probabilities
+        if checkProba(probabilities):
+            self.probabilities = probabilities
+        else:
+            print("please fill with true Proba")
+    
+    def setProba(self,state,proba):
+        self.state = state
+        if checkProba(proba):
+            self.probabilities = proba
+        else:
+            print("please fill with true Proba")
 
     def show_info(self):
         print(self.name)
@@ -24,8 +50,7 @@ class ProbaDiscrete(Proba):
             print(res[-1])
 
     def __copy__(self):
-        res = type(self)(self.name,self.state.copy(), self.probabilities.copy())
-        return res
+        return type(self)(self.name,self.state.copy(), self.probabilities.copy())
 
 
 class ProbaContinuous(Proba):
@@ -38,8 +63,7 @@ class ProbaContinuous(Proba):
         print("Density function :", self.density_function)
 
     def __copy__(self):
-        res = type(self)(self.name,self.density_function)
-        return res
+        return type(self)(self.name,self.density_function)
 
 class Bernouilli(ProbaDiscrete):
      def __init__(self, param):
