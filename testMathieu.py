@@ -24,7 +24,8 @@ class ProbaDiscrete(Proba):
             print(res[-1])
 
     def __copy__(self):
-        return type(self)(self.state.copy(), self.probabilities.copy())
+        res = type(self)(self.name,self.state.copy(), self.probabilities.copy())
+        return res
 
 
 class ProbaContinuous(Proba):
@@ -37,7 +38,8 @@ class ProbaContinuous(Proba):
         print("Density function :", self.density_function)
 
     def __copy__(self):
-        return type(self)(self.density_function)
+        res = type(self)(self.name,self.density_function)
+        return res
 
 class Bernouilli(ProbaDiscrete):
      def __init__(self, param):
@@ -45,7 +47,7 @@ class Bernouilli(ProbaDiscrete):
             raise Exception(f"Bernoulli param must be above 0 ({param})")
         if param >1:
             raise Exception(f"Bernoulli param must be below 1 ({param})")
-        self.name = type(self)
+        self.name = self.__class__.__name__
         self.param = param
         self.state = [0,1]
         self.probabilities = [param,1-param]
@@ -57,10 +59,10 @@ class Bernouilli(ProbaDiscrete):
 if __name__ == "__main__":
     # Création d'une distribution de probabilité discrète
     proba_discrete = ProbaDiscrete("manual Discrete", [1, 2, 3], [0.2, 0.5, 0.3])
-    #proba_discrete_copy = copy.copy(proba_discrete)
-    proba_discrete.show_info()
+    proba_discrete2 = proba_discrete.__copy__()
+    #proba_discrete.show_info()
     B = Bernouilli(0.4)
-    B.show_info()
+    #B.show_info()
 
 
     # Création d'une distribution de probabilité continue
@@ -74,6 +76,6 @@ if __name__ == "__main__":
             return 0.5 * x ** 2
 
     proba_continuous = ProbaContinuous("manual Continue",density)
-    #proba_continuous_copy = copy.copy(proba_continuous)
+    proba_continuous_copy = proba_continuous.__copy__()
     proba_continuous.show_info()
-    #proba_continuous_copy.show_info()
+    proba_continuous_copy.show_info()
