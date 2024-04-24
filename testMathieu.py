@@ -1,4 +1,6 @@
 import copy as copy
+from algo import Solution
+
 def checkProba(array):
     res = 0
     for p_i in array:
@@ -81,25 +83,40 @@ class Bernouilli(ProbaDiscrete):
     
 # Exemple d'utilisation
 if __name__ == "__main__":
-    # Création d'une distribution de probabilité discrète
-    proba_discrete = ProbaDiscrete("manual Discrete", [1, 2, 3], [0.2, 0.5, 0.3])
-    proba_discrete2 = proba_discrete.__copy__()
-    #proba_discrete.show_info()
-    B = Bernouilli(0.4)
-    #B.show_info()
+    # # Création d'une distribution de probabilité discrète
+    # proba_discrete = ProbaDiscrete("manual Discrete", [1, 2, 3], [0.2, 0.5, 0.3])
+    # proba_discrete2 = proba_discrete.__copy__()
+    # #proba_discrete.show_info()
+    # B = Bernouilli(0.4)
+    # #B.show_info()
 
 
-    # Création d'une distribution de probabilité continue
-    def density(x):
-    # Fonction de densité avec intégrale égale à 1 sur l'intervalle [0, 2]
-        if x < 0:
-            return 0
-        if x > 2:
-            return 0
-        else:
-            return 0.5 * x ** 2
+    # # Création d'une distribution de probabilité continue
+    # def density(x):
+    # # Fonction de densité avec intégrale égale à 1 sur l'intervalle [0, 2]
+    #     if x < 0:
+    #         return 0
+    #     if x > 2:
+    #         return 0
+    #     else:
+    #         return 0.5 * x ** 2
 
-    proba_continuous = ProbaContinuous("manual Continue",density)
-    proba_continuous_copy = proba_continuous.__copy__()
-    proba_continuous.show_info()
-    proba_continuous_copy.show_info()
+    # proba_continuous = ProbaContinuous("manual Continue",density)
+    # proba_continuous_copy = proba_continuous.__copy__()
+    # proba_continuous.show_info()
+    # proba_continuous_copy.show_info()
+    numz = [1,3,5,6]
+    target = 5
+    tmp = Solution()
+    res = tmp.searchInsert(numz,target)
+    print(res)
+# [1,3,5,6]
+# 5
+# [1,3,5,6]
+# 2
+# [1,3,5,6]
+# 7
+# [1,3,5,6]
+# 8
+# [1,3,5,6]
+# 0
