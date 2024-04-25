@@ -1,0 +1,74 @@
+from abc import ABC, abstractmethod
+
+class Derivative(ABC):
+    def __init__(self,strike,maturity):
+        self.strike = strike
+        self.maturity = maturity
+    
+    @abstractmethod
+    def payoff(self):
+        pass
+class Vanilla(Derivative):
+    def __init__(self,strike,maturity,type):
+        """
+        Call or Put
+        type is used to distinguish if the option is european, bermudean or american
+        """
+        super().__init__(strike,maturity)
+        self.type = type
+    
+    @abstractmethod
+    def payoff(self):
+        pass
+
+class Call(Vanilla):
+    def __init__(self,strike,maturity,typeEuro):
+        """
+        type is used to distinguish if the option is european, bermudean or american
+        """
+        super().__init__(strike,maturity)
+        self.typeEuro = typeEuro
+    def getStrike(self):
+        return self.strike
+    
+    def getMaturity(self):
+        return self.maturity
+    
+    def getTypeEuro(self):
+        """
+        Type 
+        """
+        return self.typeEuro
+    
+    def payoff(self,stock):
+        if stock > self.strike:
+            return stock - self.strike
+        else:
+            0
+class Put(Vanilla):
+    def __init__(self,strike,maturity,type):
+        """
+        type is used to distinguish if the option is european, bermudean or american
+        """
+        super().__init__(strike,maturity)
+        self.type = type
+    def payoff(self,stock):
+        if stock < self.strike:
+            return self.strike - stock
+        else:
+            0
+class Barrier(Derivative):
+    def __init__(self,vanilla,barrier_strike,type_barrier):
+        """
+        type is used to distinguish if the option is european, bermudean or american
+        """
+        super().__init__(vanilla.getStrike(),vanilla.getMaturity(),vanilla.getTypeEuro())
+        self.barrier_strike = barrier_strike
+        self.type_barrier = type_barrier
+
+    def payoff(self,stock):
+        
+        if stock < self.strike:
+            return self.strike - stock
+        else:
+            0
