@@ -4,6 +4,8 @@ class Solution(object):
         :type nums: List[int]
         :type target: int
         :rtype: int
+        Output the hypothetical rank of the target
+        if it would have been inserted in the inputted array
         """
         if nums[0] >= target:
             return 0
