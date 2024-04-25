@@ -29,10 +29,25 @@ class Solution(object):
             return begin
             
         
-def SKcompare(self, target,begin, end):
-    """
-    Just to know whether I'm above, below or equal to the median
-    """  
-    median = (end-begin)/2
-    if target == median:
-        return -94, median
+def SkMergeTwo(v1,v2):
+    res = []
+    while len(v1) != 0 or len(v2) != 0:
+        if v1[0] < v2[0]:
+            res.append[v1[0]]
+            v1.pop(0)
+        else:
+            res.append[v2[0]] 
+            v2.pop(0)
+    return res
+
+
+def SkTri(self, nums):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        Output the array inputted sorted via a merge sort
+        """
+        if len(nums) == 1:
+            return nums
+        
