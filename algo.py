@@ -5,21 +5,26 @@ class Solution(object):
         :type target: int
         :rtype: int
         """
-        if nums[0] > target:
+        if nums[0] >= target:
             return 0
+        if nums[len(nums) - 1] == target:
+            return len(nums) - 1
         if nums[len(nums) - 1] < target:
             return len(nums)
         begin = 0
         end = len(nums) - 1
         while end - begin > 1:
-            median = (end - begin + 1) // 2
+            median = (end + begin) // 2
             if target == nums[median]:
                 return median
             if target < nums[median]:
-                end = median
+                 end = median
             else:
                 begin = median
-        return begin
+        if nums[begin] < target:
+            return end
+        if nums[begin] == target:
+            return begin
             
         
 def SKcompare(self, target,begin, end):
