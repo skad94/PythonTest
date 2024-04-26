@@ -31,13 +31,14 @@ class Solution(object):
         
 def SkMergeTwo(v1,v2):
     res = []
-    while len(v1) != 0 or len(v2) != 0:
+    while len(v1) != 0 and len(v2) != 0:
         if v1[0] < v2[0]:
             res.append[v1[0]]
             v1.pop(0)
         else:
             res.append[v2[0]] 
             v2.pop(0)
+    res += v1 + v2 # one array is empty but then we don't have to add a if
     return res
 
 
@@ -48,6 +49,7 @@ def SkTri(self, nums):
         :rtype: int
         Output the array inputted sorted via a merge sort
         """
-        if len(nums) == 1:
+        if len(nums) <= 1:
             return nums
-        
+        else:
+            return SkMergeTwo(SkTri(nums[0:len(nums)//2]),SkTri(nums[len(nums)//2:len(nums)-1]))
