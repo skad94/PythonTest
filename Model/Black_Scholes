@@ -1,0 +1,40 @@
+import math
+import random
+class Black_Scholes:
+    def __init__(self, S_0=100, rates=0.05, vol=0.2, div=0):
+        """
+        We put a drift that is risk free rates - dividend rate( zero by default)
+        and volatility at 20% by default
+        """
+        self.stock = S_0
+        self.rates = rates
+        self.drift = rates - div
+        self.volatility = vol
+
+    def simulateEuler(self,maturity,nbDiscret):
+        """
+        Euler scheme that enable a trajectory from the model
+        """
+        res = [self.getSpot()]
+        dt = maturity/nbDiscret
+        for i in range(1,nbDiscret+1):
+            res[i] = res[i-1] + self.getDrift() * dt + self.getVolatilty() * math.sqrt(maturity) * random.normalvariate()
+        return res
+
+
+    def getS_T(self, maturity, t=0):
+        return self.stock * math.exp(-self.drift * (maturity - t) + self.volatility * math.sqrt(maturity-t))
+    
+    def getSpot(self):
+        return self.S_0
+    
+    def getDrift(self):
+        return self.drift
+    
+    def getRates(self):
+        return self.rates
+    
+    def getVolatilty(self):
+        return self.volatility
+
+    
