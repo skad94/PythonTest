@@ -27,6 +27,24 @@ class Solution(object):
             return end
         if nums[begin] == target:
             return begin
+    def removeElement(self, nums, val):
+        """
+        :type nums: List[int]
+        :type val: int
+        :rtype: int
+        """
+        k = 0
+        for i in range(len(nums)):
+            if nums[i] == val:
+                while nums[-(k + 1)] == val and len(nums) - (k + 1) > i:
+                    k=k+1
+                if len(nums) - (k + 1) == i:
+                    return len(nums) -(k + 1), nums
+                else:
+                    nums[i] = nums[-(k + 1)]
+                    nums[-(k + 1)] = 94
+                    k=k+1
+        return len(nums) - (k + 1), nums
             
         
 def SkMergeTwo(v1,v2):

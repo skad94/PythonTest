@@ -105,11 +105,12 @@ if __name__ == "__main__":
     # proba_continuous_copy = proba_continuous.__copy__()
     # proba_continuous.show_info()
     # proba_continuous_copy.show_info()
-    numz = [1,3,5,6]
-    target = 5
+    numz = [8,8,5,6,8,8,5]
+    target = 8
     tmp = Solution()
-    res = tmp.searchInsert(numz,target)
+    res = tmp.removeElement(numz,target)
     print(res)
+
 # [1,3,5,6]
 # 5
 # [1,3,5,6]
