@@ -106,6 +106,7 @@ if __name__ == "__main__":
     # proba_continuous.show_info()
     # proba_continuous_copy.show_info()
     numz = [8,8,5,6,8,8,5]
+    print(numz)
     target = 8
     tmp = Solution()
     res = tmp.removeElement(numz,target)
