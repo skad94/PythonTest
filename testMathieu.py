@@ -1,5 +1,12 @@
 import copy as copy
+from List import LinkedList
+from PythonTest import *
 from algo import Solution
+import sys
+sys.path.append(r'C:\Users\skamta\Desktop\TestGit\PythonTest\PythonTest')
+#import nom_du_module
+#nom_du_module.nom_de_la_methode()
+
 
 def checkProba(array):
     res = 0
@@ -105,12 +112,17 @@ if __name__ == "__main__":
     # proba_continuous_copy = proba_continuous.__copy__()
     # proba_continuous.show_info()
     # proba_continuous_copy.show_info()
-    numz = [8,8,5,6,8,8,5]
-    print(numz)
-    target = 8
-    tmp = Solution()
-    res = tmp.removeElement(numz,target)
-    print(res)
+    # numz = [8,8,5,6,8,8,5]
+    # print(numz)
+    # target = 8
+    # tmp = Solution()
+    # res = tmp.removeElement(numz,target)
+    # print(res)
+    print("sk")
+    # l = LinkedList(10)
+    # l.append(94)
+    # l.append(7)
+    # l.print_list()
 
 # [1,3,5,6]
 # 5
