@@ -1,32 +1,57 @@
 import math
 import random
+import matplotlib.pyplot as plt
+
 class Black_Scholes:
     def __init__(self, S_0=100, rates=0.05, vol=0.2, div=0):
         """
-        We put a drift that is risk free rates - dividend rate( zero by default)
-        and volatility at 20% by default
+        We put a drift that is risk free rates - dividend rate (zero by default)
+        and volatility at 20% by default.
         """
-        self.stock = S_0
+        self.spot = S_0
         self.rates = rates
         self.drift = rates - div
         self.volatility = vol
 
-    def simulateEuler(self,maturity,nbDiscret):
+    def simulateEuler(self, maturity, nbDiscret, regenerateAlea = True, Dw=[]):
         """
-        Euler scheme that enable a trajectory from the model
+        Euler scheme that enables a trajectory from the model.
+        with the possibility to load one own randomness
         """
         res = [self.getSpot()]
-        dt = maturity/nbDiscret
-        for i in range(1,nbDiscret+1):
-            res[i] = res[i-1] + self.getDrift() * dt + self.getVolatilty() * math.sqrt(maturity) * random.normalvariate()
+        dt = maturity / nbDiscret
+        for i in range(1, nbDiscret + 1):
+            if regenerateAlea:
+                dW = random.normalvariate(0, math.sqrt(dt))
+            else:
+                dW =Dw[i-1]
+            res.append(res[i-1] * (1 + self.getDrift() * dt + self.getVolatility() * dW))
+        return res
+    
+    def simulateMilstein(self, maturity, nbDiscret, regenerateAlea = True, Dw=[]):
+        """
+        Milstein scheme that enables a trajectory from the model.
+        """
+        res = [self.getSpot()]
+        dt = maturity / nbDiscret
+        for i in range(1, nbDiscret + 1):
+            if regenerateAlea:
+                dW = random.normalvariate(0, math.sqrt(dt))
+            else:
+                dW =Dw[i-1]
+            S_prev = res[i-1]
+            drift = self.getDrift() * S_prev
+            diffusion = self.getVolatility() * S_prev
+            correction = 0.5 * self.getVolatility() ** 2 * S_prev * (dW ** 2 - dt)
+            S_next = S_prev + drift * dt + diffusion * dW + correction
+            res.append(S_next)
         return res
 
-
     def getS_T(self, maturity, t=0):
-        return self.stock * math.exp(-self.drift * (maturity - t) + self.volatility * math.sqrt(maturity-t))
+        return self.stock * math.exp(-self.drift * (maturity - t) + self.volatility * math.sqrt(maturity - t))
     
     def getSpot(self):
-        return self.S_0
+        return self.spot
     
     def getDrift(self):
         return self.drift
@@ -34,7 +59,25 @@ class Black_Scholes:
     def getRates(self):
         return self.rates
     
-    def getVolatilty(self):
+    def getVolatility(self):
         return self.volatility
 
-    
+# Simulation and plot
+if __name__ == "__main__":
+    bs_model = Black_Scholes(S_0=100, rates=0.05, vol=0.2, div=0)
+    maturity = 1.0  # 1 year
+    nbDiscret = 252  # daily steps for 1 year
+    dt = maturity / nbDiscret
+    dW = []
+    for i in range(1, nbDiscret + 1):
+        dW.append(random.normalvariate(0, math.sqrt(dt)))
+
+    trajectory = bs_model.simulateEuler(maturity, nbDiscret,False,dW)
+    trajectoryMil = bs_model.simulateMilstein(maturity, nbDiscret,False,dW)
+
+    plt.plot(trajectory, label='Euler Scheme')
+    plt.plot(trajectoryMil, label='Milstein Scheme')
+    plt.title('Stock Price Trajectory using Euler Scheme')
+    plt.xlabel('Time Steps')
+    plt.ylabel('Stock Price')
+    plt.show()
