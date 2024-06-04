@@ -1,0 +1,25 @@
+def MonteCarlo(traj, nbSimul, payoff):
+    res = 0
+    for i in range(1,nbSimul):
+            payoff()
+
+class Priceable:
+    def __init__(self,payoff,model,numericMethod,ccy,discountCurve):
+            self.payoff = payoff
+            self.model = model
+            self.numericMethod = numericMethod
+            self.ccy = ccy
+            self.discountCurve = discountCurve
+
+    def Price(self,asOfDate):
+          pass
+    
+
+class CallEuro(Priceable):
+    def __init__(self):
+          pass
+    
+    def Price(self,asOfDate):
+        maturity = super().payoff.getMaturity()
+        DF = super().discountCurve[self.ccy][maturity]
+         

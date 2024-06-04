@@ -27,10 +27,3 @@ class Solution(object):
             return begin
             
         
-def SKcompare(self, target,begin, end):
-    """
-    Just to know whether I'm above, below or equal to the median
-    """  
-    median = (end-begin)/2
-    if target == median:
-        return -94, median

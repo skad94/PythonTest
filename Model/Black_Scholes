@@ -2,16 +2,14 @@ import math
 import random
 import matplotlib.pyplot as plt
 
-class Black_Scholes:
-    def __init__(self, S_0=100, rates=0.05, vol=0.2, div=0):
+class SimulableCont:
+    def __init__(self,drift,vol):
         """
-        We put a drift that is risk free rates - dividend rate (zero by default)
-        and volatility at 20% by default.
+        We have a drift term and a vol term
+        We are able to simulate via Euler or Milstein
         """
-        self.spot = S_0
-        self.rates = rates
-        self.drift = rates - div
-        self.volatility = vol
+        self.drift = drift
+        self.vol = vol
 
     def simulateEuler(self, maturity, nbDiscret, regenerateAlea = True, Dw=[]):
         """
@@ -46,6 +44,36 @@ class Black_Scholes:
             S_next = S_prev + drift * dt + diffusion * dW + correction
             res.append(S_next)
         return res
+
+
+    def simul_brownian(size_sample, mu, sigma):
+        """
+        Retourne un chemin brownien avec une dérive possible (mu) et un coefficient de diffusion (sigma).
+        """
+        W = [0.0] * size_sample  # brownian
+        for i in range(1, size_sample):
+            epsilon = math.sqrt(-2 * math.log(random.uniform(0, 1))) * math.cos(2 * math.pi * random.uniform(0, 1))  # Normal
+            epsilon = sigma * epsilon + mu
+            W[i] = W[i - 1] + math.sqrt(1.0 / size_sample) * epsilon
+        return W
+
+    def getDrift(self):
+        return self.drift
+        
+    def getVolatility(self):
+        return self.volatility
+
+class Black_Scholes(SimulableCont):
+    def __init__(self, S_0=100, rates=0.05, vol=0.2, div=0):
+        """
+        We put a drift that is risk free rates - dividend rate (zero by default)
+        and volatility at 20% by default.
+        """
+        self.spot = S_0
+        self.rates = rates
+        self.drift = rates - div
+        self.volatility = vol
+
 
     def getS_T(self, maturity, t=0):
         return self.stock * math.exp(-self.drift * (maturity - t) + self.volatility * math.sqrt(maturity - t))

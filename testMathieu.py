@@ -80,6 +80,29 @@ class Bernouilli(ProbaDiscrete):
 
      def __copy__(self):
         return type(self)(self.values.copy(), self.probabilities.copy())
+      
+def swapS(x,y):
+        tmp = x
+        x = y
+        y = tmp
+        return x,y
+
+def bubleSort(data):
+    tab = data
+    n = len(tab)
+    i = 0
+    j = 0
+    while j < n:
+        i = 0
+        while i < n-1:
+            if tab[i] > tab [i+1]:
+                a,b = swapS(tab[i], tab [i+1])
+                tab[i] = a
+                tab[i+1] = b
+            i = i + 1
+        j = j + 1
+    return tab
+
     
 # Exemple d'utilisation
 if __name__ == "__main__":
@@ -105,11 +128,16 @@ if __name__ == "__main__":
     # proba_continuous_copy = proba_continuous.__copy__()
     # proba_continuous.show_info()
     # proba_continuous_copy.show_info()
-    numz = [1,3,5,6]
-    target = 5
-    tmp = Solution()
-    res = tmp.searchInsert(numz,target)
+    # numz = [1,3,5,6]
+    # target = 5
+    # tmp = Solution()
+    # res = tmp.searchInsert(numz,target)
+    Reso = {1,2,3,2}
+    Reso
+    res = [10,2,65,87,9,64,76,54,23,5,498,354,11,1,90,3,91]
+    res[2] = 94
     print(res)
+    print(bubleSort(res))
 # [1,3,5,6]
 # 5
 # [1,3,5,6]

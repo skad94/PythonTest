@@ -57,18 +57,31 @@ class Put(Vanilla):
             return self.strike - stock
         else:
             0
-class Barrier(Derivative):
+class BarrierEuro(Derivative):
     def __init__(self,vanilla,barrier_strike,type_barrier):
         """
         type is used to distinguish if the option is european, bermudean or american
+        type_barrier Up or Down
+        Call or Put is contained in name of the super
         """
         super().__init__(vanilla.getStrike(),vanilla.getMaturity(),vanilla.getTypeEuro())
         self.barrier_strike = barrier_strike
         self.type_barrier = type_barrier
 
-    def payoff(self,stock):
-        # to be completed
-        if stock < self.strike:
-            return self.strike - stock
-        else:
-            0
+    def payoff(self,spot):
+        if super().__class__.__name__ == Call:
+            delta_call = 1
+        elif super().__class__.__name__ == Put:
+            delta_call = -1
+        if self.type_barrier == "IN":
+            #UI / DO
+            if spot < self.barrier_strike:
+                return max(delta_call*(spot - self.strike),0)
+            else:
+                0
+        if self.type_barrier == "OUT":
+            #UO / DI
+            if spot < self.barrier_strike:
+                return max(delta_call*(spot - self.strike),0)
+            else:
+               0
