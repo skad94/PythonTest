@@ -1,5 +1,12 @@
 import copy as copy
+from List import LinkedList
+from PythonTest import *
 from algo import Solution
+import sys
+sys.path.append(r'C:\Users\skamta\Desktop\TestGit\PythonTest\PythonTest')
+#import nom_du_module
+#nom_du_module.nom_de_la_methode()
+
 
 def checkProba(array):
     res = 0
