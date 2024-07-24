@@ -45,5 +45,17 @@ class Solution(object):
                     k=k+1
         rr = len(nums) -(k + 1)
         return rr, nums
-            
+    
+    def triNaiff(self,data):
+        desc = len(data)
+        while desc > 0:
+            asc = 0
+            while asc < len(data) - desc: 
+                if data[asc] > data[asc + 1]:
+                    tmp = data[asc]
+                    data[asc] = data[asc + 1]
+                    data[asc + 1] = tmp
+                asc = asc + 1
+            desc = desc - 1        
+
         
