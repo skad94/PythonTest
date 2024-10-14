@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('ajouter_personne/', views.ajouter_personne, name='ajouter_personne'), # type: ignore
     path('', views.home, name='home'),  # Route pour la page d'accueil
+    path('recherche/', views.rechercher_personnes, name='rechercher_personnes'), # Recherche par personne
 ]
