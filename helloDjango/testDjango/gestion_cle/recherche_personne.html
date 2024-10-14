@@ -1,0 +1,16 @@
+<div class="container">
+  <h1>Recherche de personnes</h1>
+  <form method="GET">
+    <input type="text" name="query" placeholder="Rechercher par nom ou prénom" value="{{ query }}" class="form-control mb-3">
+    <button type="submit" class="btn btn-primary">Rechercher</button>
+  </form>
+
+  <h2>Résultats :</h2>
+  <ul>
+    {% for personne in personnes %}
+      <li>{{ personne.prenom }} {{ personne.nom }} - Âge : {{ personne.age }} - Taille : {{ personne.taille }}</li>
+    {% empty %}
+      <li>Aucun résultat trouvé</li>
+    {% endfor %}
+  </ul>
+</div>
